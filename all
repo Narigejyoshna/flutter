@@ -1,0 +1,639 @@
+✅ 1. Check System Requirements
+•	Windows 10/11 (64-bit)
+•	1.64 GB free disk space
+•	Git for Windows (required)
+________________________________________
+✅ 2. Install Git
+Flutter needs Git.
+Steps
+1.	Go to: https://git-scm.com/download/win
+2.	Install with default settings
+3.	After install → Restart computer (recommended)
+________________________________________
+✅ 3. Download Flutter SDK
+1.	Go to official Flutter download page:
+https://docs.flutter.dev/get-started/install/windows
+2.	Download flutter_windows_x.x.x-stable.zip
+3.	Extract it to a folder (example):
+4.	C:\src\flutter
+________________________________________
+✅ 4. Add Flutter to PATH
+So you can run Flutter commands from anywhere.
+Steps:
+1.	Press Windows + R → type sysdm.cpl → Enter
+2.	Go to Advanced → Environment Variables
+3.	Under System Variables, select Path → Edit
+4.	Click New and add:
+C:\src\flutter\bin
+5.	Click OK to save.
+________________________________________
+✅ 5. Verify Flutter Installation
+Open Command Prompt or PowerShell and run:
+flutter --version
+If Flutter version shows, it is installed correctly.
+________________________________________
+✅ 6. Run Flutter Doctor
+This checks missing requirements.
+flutter doctor
+You will see something like:
+•	✔ Flutter SDK
+•	✔ Dart SDK
+•	❗ Android toolchain missing
+•	❗ Chrome missing
+•	❗ Android Studio not installed
+Follow any instructions that Flutter Doctor shows.
+________________________________________
+✅ 7. Install Android Studio (Required for Android Apps)
+1.	Download: https://developer.android.com/studio
+2.	Install with default settings
+3.	Open Android Studio → go to SDK Manager
+4.	Install:
+o	Android SDK
+o	Android SDK Platform
+o	Android Virtual Device (AVD)
+Run again:
+flutter doctor
+1b
+void main() {
+  int a = 10;
+  int b = 20;
+  int sum = a + b;
+
+  print("Sum = $sum");
+}
+2a
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Flutter Widgets")),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "This is a Text Widget",
+                style: TextStyle(fontSize: 22, color: Colors.blue),
+              ),
+
+              SizedBox(height: 20),
+
+              Container(
+                padding: EdgeInsets.all(20),
+                color: Colors.green,
+                child: Text(
+                  "Inside Container",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Image.network(
+                'https://picsum.photos/200',
+                height: 150,
+                width: 150,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+2b
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyLayouts());
+}
+
+class MyLayouts extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Row, Column & Stack")),
+        body: Column(
+         
+          children: [
+            
+            // Row Example
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(width: 50, height: 50, color: Colors.red),
+                Container(width: 50, height: 50, color: Colors.green),
+                Container(width: 50, height: 50, color: Colors.blue),
+              ],
+            ),
+
+            SizedBox(height: 20),
+
+            // Column Example
+            Column(
+              children: [
+                Container(width: 100, height: 40, color: Colors.orange),
+                SizedBox(height: 10),
+                Container(width: 100, height: 40, color: Colors.purple),
+              ],
+            ),
+
+            SizedBox(height: 20),
+
+            // Stack Example
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(width: 150, height: 150, color: Colors.grey),
+                  Container(width: 100, height: 100, color: Colors.black),
+                  Text('stack',style:TextStyle(color:Colors.white))
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+3a
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: LayoutBuilder(
+          builder: (context, c) {
+            double w = c.maxWidth;
+
+            if (w < 600) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Mobile", style: TextStyle(fontSize: 22)),
+                  Container(width: 100, height: 100, color: Colors.blue),
+                ],
+              );
+            }         
+            else if (w < 1000) {
+              return Row(               
+                mainAxisAlignment: MainAxisAlignment.center,              
+                children: [
+                  Text("Tablet", style: TextStyle(fontSize: 22)),
+                  SizedBox(width:40),
+                  Container(width: 250, height: 150, color: Colors.green),
+                ],
+              );
+            } else {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("Desktop", style: TextStyle(fontSize: 22)),
+                  Container(width: 300, height: 200, color: Colors.orange),
+                  Container(width: 300, height: 200, color: Colors.red),
+                ],
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+3b
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MediaQueryDemo());
+}
+
+class MediaQueryDemo extends StatelessWidget {
+  const MediaQueryDemo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (context) {
+            double width = MediaQuery.of(context).size.width;
+            return Center(
+              child: Text(
+                width < 600 ? "Mobile View" : "Tablet/Desktop View",
+                style: const TextStyle(fontSize: 24),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+4a
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Screen1());
+  }
+}
+
+class Screen1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Next"),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Screen2()),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Screen2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Back"),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    );
+  }
+}
+
+4b
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Screen1(),
+        '/second': (context) => Screen2(),
+      },
+    );
+  }
+}
+
+class Screen1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Go to Screen 2"),
+          onPressed: () => Navigator.pushNamed(context, '/second'),
+        ),
+      ),
+    );
+  }
+}
+
+class Screen2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          child: Text("Back"),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+    );
+  }
+}
+5a
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(child: Text("StatefulWidget in one class")),
+      ),
+    );
+  }
+}
+5a2
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(child: Text("StatelessWidget in one class")),
+      ),
+    );
+  }
+}
+5b
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String value = "Test";
+
+  void clickMe() {
+    setState(() {
+      value = "Test done";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Simple Flutter App')),
+        body: Center(child: Text(value)),
+       
+       
+      ),
+    );
+  }
+}
+6a
+import 'package:flutter/material.dart';
+void main() {
+ runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+ const MyApp({super.key});
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ home: Scaffold(
+ appBar: AppBar(
+ title:Text("Custom widget"),
+ ),
+ body:Center(
+ child: Mybutton("clickme"),
+ ),
+ ),
+ );
+ }
+}
+class Mybutton extends StatelessWidget {
+ final String text;
+Mybutton(this.text);
+ @override
+ Widget build(BuildContext context) {
+ return ElevatedButton(
+ onPressed: () {
+ print("button pressed");
+ },
+ child: Text(text),
+ );
+ }
+}
+6b
+import 'package:flutter/material.dart';
+void main() {
+ runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+ const MyApp({super.key});
+ @override
+ Widget build(BuildContext context) {
+ return MaterialApp(
+ theme: ThemeData(
+ primaryColor: Colors.white,
+ elevatedButtonTheme: ElevatedButtonThemeData(
+ style: ElevatedButton.styleFrom(
+ backgroundColor: Colors.black,
+ textStyle:TextStyle(fontSize: 20,color:Colors.white),
+ ),
+ ),
+ ),
+ home: Scaffold(
+ appBar: AppBar(title:Text("Custom Widget")),
+ body: Center(
+ child: Mybutton("Click Me"),
+ ),
+ ),
+ );
+ }
+}
+class Mybutton extends StatelessWidget {
+ final String text;
+ Mybutton(this.text);
+ @override
+ Widget build(BuildContext context) {
+ return ElevatedButton(
+ onPressed: () {
+ print("Button pressed");
+ },
+ child: Text(text),
+ );
+ }
+}
+7 a) Design a form with various input fields. 
+import 'package:flutter/material.dart'; 
+void main() { 
+runApp(const MyApp()); 
+} 
+class MyApp extends StatefulWidget { 
+const MyApp({super.key}); 
+@override 
+State<MyApp> createState() => _MyAppState(); 
+} 
+class _MyAppState extends State<MyApp> { 
+final name =TextEditingController(); 
+final age =TextEditingController(); 
+@override 
+Widget build(BuildContext context) { 
+return MaterialApp( 
+home: Scaffold( 
+appBar: AppBar(title: const Text('form')), 
+body: Column( 
+children: [ 
+TextField( 
+controller: name, 
+decoration: const InputDecoration(labelText: 'Name'), 
+), 
+TextField( 
+controller: age, 
+decoration: const InputDecoration(labelText: 'Age'), 
+), 
+const SizedBox(height: 20.0), 
+ElevatedButton( 
+onPressed: () { 
+print("name: ${name.text}"); 
+print("age: ${age.text}"); 
+}, 
+child: Text("Submit"), 
+), 
+], 
+), 
+), 
+); 
+} 
+}7 b) Implement form validation and error handling. 
+import 'package:flutter/material.dart'; 
+void main() => runApp(MaterialApp(home: MyForm())); 
+class MyForm extends StatefulWidget { 
+@override 
+State<MyForm> createState() => _MyFormState(); 
+} 
+class _MyFormState extends State<MyForm> { 
+final name = TextEditingController(); 
+final age = TextEditingController(); 
+String error = ""; 
+@override 
+Widget build(BuildContext context) { 
+return Scaffold( 
+appBar: AppBar(title: Text("Form")), 
+body: Column(children: [ 
+TextField(controller: name, decoration: InputDecoration(labelText: "Name")), 
+TextField(controller: age, decoration: InputDecoration(labelText: "Age")), 
+Text(error, style: TextStyle(color: Colors.red)), 
+ElevatedButton( 
+child: Text("Submit"), 
+onPressed: () { 
+setState(() { 
+if (name.text.isEmpty && age.text.isEmpty) { 
+error = "Both fields are empty!"; 
+} else if (int.tryParse(name.text) != null) { 
+error = "Name cannot have numbers!"; 
+} else if (int.tryParse(age.text) == null) { 
+error = "Age must be numbers!"; 
+} else { 
+print("Name: ${name.text}, Age: ${age.text}"); 
+} 
+}); 
+}, 
+) 
+]), 
+); 
+} 
+} 
+8 a) Add animations to UI elements using Flutter's animation 
+framework.import 'package:flutter/material.dart'; 
+void main() => runApp(MyApp()); 
+class MyApp extends StatefulWidget { 
+@override 
+State<MyApp> createState() => _MyAppState(); 
+} 
+class _MyAppState extends State<MyApp> { 
+double width = 100; 
+@override 
+void initState() { 
+super.initState(); 
+// Animate after build 
+Future.delayed(Duration.zero, () { 
+setState(() { 
+width = 200; // final width 
+}); 
+}); 
+} 
+@override 
+Widget build(BuildContext context) { 
+return MaterialApp( 
+home: Scaffold( 
+appBar: AppBar(title: Text("Easy Animation")), 
+body: Center( 
+child: AnimatedContainer( 
+duration: Duration(seconds: 2), 
+width: width, 
+height: 100, 
+color: Colors.blue, 
+child: Center( 
+child: Text("Hello", style: TextStyle(color: Colors.white)), 
+), 
+), 
+), 
+), 
+); 
+} 
+} 
+8 b) Experiment with different types of animations (fade, slide) 
+import 'package:flutter/material.dart'; 
+void main() => runApp(MyApp()); 
+class MyApp extends StatefulWidget { 
+@override 
+State<MyApp> createState() => _MyAppState(); 
+}class _MyAppState extends State<MyApp> { 
+double opacity = 0.0; 
+double left = 0.0; 
+@override 
+Widget build(BuildContext context) { 
+return MaterialApp( 
+home: Scaffold( 
+appBar: AppBar(title: Text("Fade & Slide Animation")), 
+body: Stack( 
+children: [ 
+AnimatedPositioned( 
+duration: Duration(seconds: 1), 
+left: left, 
+top: 100, 
+child: AnimatedOpacity( 
+duration: Duration(seconds: 1), 
+opacity: opacity, 
+child: Container(width: 100, height: 100, color: Colors.blue), 
+), 
+), 
+Positioned( 
+top: 250, 
+left: 20, 
+child: ElevatedButton( 
+child: Text("Animate"), 
+onPressed: () => setState(() { 
+opacity = opacity == 0 ? 1 : 0; 
+left = left == 0 ? 200 : 0; 
+}), 
+), 
+) 
+], 
+), 
+), 
+); 
+} 
+}
+
